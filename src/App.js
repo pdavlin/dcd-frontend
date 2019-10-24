@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Header } from './Header';
 // import { G_API_KEY } from './secrets/secrets';
 
 const mapStyles = {
@@ -9,8 +10,9 @@ const mapStyles = {
 
 export class MapContainer extends Component {
   render() {
-    console.log(process.env);
     return (
+      <div>
+      < Header />
       <Map
         google={this.props.google}
         zoom={12}
@@ -20,10 +22,11 @@ export class MapContainer extends Component {
           lng: -96.0449
         }}
       />
+      </div>
     );
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_G_API_KEY
+  apiKey: process.env.REACT_APP_G_API_KEY // make sure to define this in Netlify configuration
 })(MapContainer);
