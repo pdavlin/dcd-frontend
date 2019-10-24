@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
-import { G_API_KEY } from './secrets/secrets';
+// import { G_API_KEY } from './secrets/secrets';
 
 const mapStyles = {
   width: '100%',
@@ -9,6 +9,7 @@ const mapStyles = {
 
 export class MapContainer extends Component {
   render() {
+    console.log(process.env);
     return (
       <Map
         google={this.props.google}
@@ -24,5 +25,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: G_API_KEY
+  apiKey: process.env.REACT_APP_G_API_KEY
 })(MapContainer);
