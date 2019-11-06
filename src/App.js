@@ -1,32 +1,31 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
-import { Header } from './shared/ui-components/Header';
-// import { G_API_KEY } from './secrets/secrets';
-
-const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
-
-export class MapContainer extends Component {
+import GoogleMapReact from 'google-map-react';
+import {Header} from './shared/ui-components/Header';
+  
+class SimpleMap extends Component {
+  static defaultProps = {
+    center: {
+      lat: 41.2701,
+      lng: -96.0449
+    },
+    zoom: 12
+  };
+ 
   render() {
     return (
-      <div>
+      // Important! Always set the container height explicitly
+      <div style={{ height: '100vh', width: '100%' }}>
         <Header />
-        <Map
-          google={this.props.google}
-          zoom={12}
-          style={mapStyles}
-          initialCenter={{
-            lat: 41.2701,
-            lng: -96.0449
-          }}
-        />
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: 'AIzaSyBehy4PQnaAhmsA_RukVbIdNjodksMLZsE' }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+          yesIWantToUseGoogleMapApiInternals
+        >
+        </GoogleMapReact>
       </div>
     );
   }
 }
-
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_G_API_KEY // make sure to define this in Netlify configuration
-})(MapContainer);
+ 
+export default SimpleMap;
