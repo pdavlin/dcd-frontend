@@ -9,7 +9,7 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "react-scripts start --env.REACT_APP_G_API_KEY=AIzaSyBehy4PQnaAhmsA_RukVbIdNjodksMLZsE",
+    "serve": "react-scripts start --env.REACT_APP_G_API_KEY=AIzaSyBehy4PQnaAhmsA_RukVbIdNjodksMLZsE",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
