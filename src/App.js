@@ -17,7 +17,7 @@ class SimpleMap extends Component {
       <div style={{ height: '100vh', width: '100%' }}>
         <Header />
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyBehy4PQnaAhmsA_RukVbIdNjodksMLZsE' }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_G_API_KEY }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           yesIWantToUseGoogleMapApiInternals
