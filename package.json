@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rebass/forms": "^4.0.6",
+    "@rebass/preset": "^4.0.5",
     "axios": "^0.19.0",
+    "emotion-theming": "^10.0.19",
     "google-map-react": "^1.1.5",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "rebass": "^4.0.7"
   },
   "scripts": {
-    "serve": "react-scripts start --env.REACT_APP_G_API_KEY=AIzaSyBehy4PQnaAhmsA_RukVbIdNjodksMLZsE",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

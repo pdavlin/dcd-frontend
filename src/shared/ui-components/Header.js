@@ -1,10 +1,22 @@
 import React, { Component } from 'react'
 import './Header.css'
+import { Card, Heading } from 'rebass';
+import { AddressForm } from './AddressForm';
 
 export class Header extends Component {
   render() {
     return (
-      <div class="title-container">Douglas County Democracy Project</div>
+      <div id='header-wrapper' className='header-wrapper'>
+        <Card
+          p={15}
+          sx={{
+            borderRadius: 12
+          }}>
+          <Heading>Douglas County Democracy Project</Heading>
+          <br />
+          <AddressForm />
+        </Card>
+      </div>
     )
   }
 }
