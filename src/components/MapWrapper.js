@@ -512,18 +512,20 @@ const createMapOptions = (maps) => {
   };
 }
 
-const MapWrapper = () => (
-  <GoogleMapReact
-    bootstrapURLKeys={{ key: process.env.REACT_APP_G_API_KEY }}
-    defaultCenter={{
-      lat: 41.2701,
-      lng: -96.0449
-    }}
-    options={createMapOptions}
-    defaultZoom={12}
-    yesIWantToUseGoogleMapApiInternals
-    onGoogleApiLoaded={({ map, maps }) => onGoogleApiLoaded(map, maps)}
-  />
-);
+const MapWrapper = () => {
+  return (
+    <GoogleMapReact
+      bootstrapURLKeys={{ key: process.env.REACT_APP_G_API_KEY }}
+      defaultCenter={{
+        lat: 41.2701,
+        lng: -96.0449
+      }}
+      options={createMapOptions}
+      defaultZoom={12}
+      yesIWantToUseGoogleMapApiInternals
+      onGoogleApiLoaded={({ map, maps }) => onGoogleApiLoaded(map, maps)}
+    />
+  );
+};
 
 export default MapWrapper;

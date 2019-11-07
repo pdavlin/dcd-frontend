@@ -3,20 +3,18 @@ import './Header.css'
 import { Card, Heading } from 'rebass';
 import { AddressForm } from './AddressForm';
 
-export class Header extends Component {
-  render() {
-    return (
-      <div id='header-wrapper' className='header-wrapper'>
-        <Card
-          p={15}
-          sx={{
-            borderRadius: 12
-          }}>
-          <Heading>Douglas County Democracy Project</Heading>
-          <br />
-          <AddressForm />
-        </Card>
-      </div>
-    )
-  }
+export const Header = () => {
+  return (
+    <div id='header-wrapper' className='header-wrapper'>
+      <Card
+        p={15}
+        sx={{
+          borderRadius: 12
+        }}>
+        <Heading>Douglas County Democracy Project</Heading>
+        <br />
+        <AddressForm />
+      </Card>
+    </div>
+  )
 }
