@@ -401,15 +401,15 @@ const onGoogleApiLoaded = (map, maps) => {
   ]
 
   // Construct the polygon.
-  const omahaTriangle = new maps.Polygon({
+  const countyBoardDist1 = new maps.Polygon({
     paths: countyBoardDist1Coords,
-    strokeColor: "#FF0000",
+    strokeColor: "#55d6be",
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#FF0000",
+    fillColor: "#55d6be",
     fillOpacity: 0.35
   });
-  omahaTriangle.setMap(map);
+  countyBoardDist1.setMap(map);
 };
 
 const MapWrapper = () => (

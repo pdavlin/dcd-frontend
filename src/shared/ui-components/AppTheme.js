@@ -3,8 +3,8 @@ export const appTheme = {
   colors: {
     text: '#000',
     background: '#fff',
-    primary: '#d71920',
-    secondary: '#30c',
+    primary: '#55d6be',
+    secondary: '#ff686b',
     muted: '#f6f6f9',
     gray: '#dddddf',
     highlight: 'hsla(205, 100%, 40%, 0.125)'
