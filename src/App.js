@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import MapWrapper from './shared/ui-components/MapWrapper';
-import { Header } from './shared/ui-components/Header';
+import MapWrapper from './components/MapWrapper';
+import { Header } from './components/Header';
 import { ThemeProvider } from 'emotion-theming';
-import { appTheme } from './shared/ui-components/AppTheme';
+import { appTheme } from './components/AppTheme';
 
 class App extends Component {
   render() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Box, Button } from 'rebass';
 import { Input, Label } from '@rebass/forms';
-import { getLatLngFromAddress } from './../services/MapsApiService';
+import { getLatLngFromAddress } from '../services/MapsApiService';
 
 export class AddressForm extends Component {
   constructor(props) {
