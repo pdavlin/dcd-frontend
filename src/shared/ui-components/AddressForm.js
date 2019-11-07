@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Box, Button } from 'rebass';
 import { Input, Label } from '@rebass/forms';
+import { getLatLngFromAddress } from './../services/MapsApiService';
 
 export class AddressForm extends Component {
   constructor(props) {
@@ -9,9 +10,15 @@ export class AddressForm extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit(event) {
-    alert(this.state.address);
+  async handleSubmit(event) {
+    // alert(this.state.address);
     event.preventDefault();
+    await getLatLngFromAddress(this.state.address).then(response => {
+      if(response.data.status !== "REQUEST_DENIED") {
+        console.log(response);
+        alert('Lat is: ' + response.data.results[0].geometry.location.lat + ' lng is: ' + response.data.results[0].geometry.location.lng)
+      } else console.error("uh oh", response)
+    })
   }
   handleChange(event) {
     this.setState({ address: event.target.value })
