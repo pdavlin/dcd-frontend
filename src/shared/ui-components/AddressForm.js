@@ -6,7 +6,7 @@ import { getLatLngFromAddress } from './../services/MapsApiService';
 export class AddressForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { address: '123 Main St' }
+    this.state = { address: '1819 Farnam Street' }
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
