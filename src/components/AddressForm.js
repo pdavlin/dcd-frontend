@@ -6,7 +6,7 @@ import { useAppContext } from './AppContext';
 
 export const AddressForm = (props) => {
 
-  const { latLngPair, setLatLngPair } = useAppContext();
+  const { setLatLngPair } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
 
   const handleSubmit = async (event) => {

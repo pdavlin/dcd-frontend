@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MapWrapper from './components/MapWrapper';
 import { Header } from './components/Header';
 import { ThemeProvider } from 'emotion-theming';

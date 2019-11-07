@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GoogleMapReact from "google-map-react";
+import { useAppContext } from './AppContext';
+
 
 const onGoogleApiLoaded = (map, maps) => {
 
@@ -513,6 +515,8 @@ const createMapOptions = (maps) => {
 }
 
 const MapWrapper = () => {
+  const { latLngPair, setLatLngPair } = useAppContext();
+  
   return (
     <GoogleMapReact
       bootstrapURLKeys={{ key: process.env.REACT_APP_G_API_KEY }}

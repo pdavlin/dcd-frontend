@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Header.css'
 import { Card, Heading } from 'rebass';
 import { AddressForm } from './AddressForm';
