@@ -70,7 +70,7 @@ export const AddressForm = (props) => {
           width={1 / 2}
           mt={1}
           sx={{
-            ':hover': {
+            ':hover, :focus': {
               backgroundColor: 'primary',
               color: 'background'
             }
@@ -88,7 +88,7 @@ export const AddressForm = (props) => {
           width={1 / 2}
           mt={1}
           sx={{
-            ':hover': {
+            ':hover, :focus': {
               backgroundColor: 'primary',
               color: 'background'
             }
