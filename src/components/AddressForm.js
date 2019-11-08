@@ -15,7 +15,6 @@ export const AddressForm = (props) => {
     await getLatLngFromAddress(address).then(response => {
       if (response.data.status !== "REQUEST_DENIED") {
         console.log(response);
-        // alert('Lat is: ' + response.data.results[0].geometry.location.lat + ' lng is: ' + response.data.results[0].geometry.location.lng);
         setLatLngPair([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
       } else console.error("uh oh", response)
     })
