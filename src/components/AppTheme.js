@@ -5,6 +5,7 @@ export const appTheme = {
     background: '#fff',
     primary: '#55d6be',
     secondary: '#ff686b',
+    error: '#cc0000',
     muted: '#f6f6f9',
     gray: '#dddddf',
     highlight: 'hsla(205, 100%, 40%, 0.125)'

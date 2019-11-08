@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
-import { Box, Button } from 'rebass';
-import { Input, Label } from '@rebass/forms';
+import { Box, Button, Text } from 'rebass';
+import { Input, Label, Select } from '@rebass/forms';
 import { getLatLngFromAddress } from '../services/MapsApiService';
 import { useAppContext } from './AppContext';
 
+const elections = {
+  '1': {name: 'Douglas County Board'}
+}
+
 export const AddressForm = (props) => {
 
-  const { setLatLngPair } = useAppContext();
+  const { setLatLngPair, inDistrict } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -15,7 +19,6 @@ export const AddressForm = (props) => {
     await getLatLngFromAddress(address).then(response => {
       if (response.data.status !== "REQUEST_DENIED") {
         console.log(response);
-        // alert('Lat is: ' + response.data.results[0].geometry.location.lat + ' lng is: ' + response.data.results[0].geometry.location.lng);
         setLatLngPair([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
       } else console.error("uh oh", response)
     })
@@ -43,6 +46,24 @@ export const AddressForm = (props) => {
             value={address}
             onChange={({ target }) => { setAddress(target.value) }}
           />
+          <Label htmlFor='election' pt={1}>Select an <b>&nbsp;election&nbsp;</b> to search for.</Label>
+          <Select
+            id='election'
+            name='election'
+            defaultValue='Douglas County Board'
+            sx={{
+              ':focus': {
+                borderColor: 'primary',
+                boxShadow: '0 0 0 2px #55d6be'
+              }
+            }}>
+            {Object.entries(elections).map(([key, election]) => (
+              <option
+                key={key}>
+                {election.name}
+              </option>
+            ))}
+          </Select>
         </Box>
         <Button
           variant='hoverable'
@@ -58,21 +79,26 @@ export const AddressForm = (props) => {
     )
   } else {
     return (
-      <Button
-        variant='hoverable'
-        width={1 / 2}
-        mt={1}
-        sx={{
-          ':hover': {
-            backgroundColor: 'primary',
-            color: 'background'
-          }
-        }}
-        onClick={
-          newSearch
-        }>
-        New Search
+      <div>
+        {
+          !inDistrict ? <div><Text color={'error'}> Your address wasn't found in any of the districts for that position. Please try another address. </Text> <br /></div> : null
+        }
+        <Button
+          variant='hoverable'
+          width={1 / 2}
+          mt={1}
+          sx={{
+            ':hover': {
+              backgroundColor: 'primary',
+              color: 'background'
+            }
+          }}
+          onClick={
+            newSearch
+          }>
+          New Search
       </Button>
+      </div>
     )
   }
 }
