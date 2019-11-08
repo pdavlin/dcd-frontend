@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { useAppContext } from './AppContext';
 import { COUNTY_BOARD_1_COORDS } from './Consts';
+import { pointInPoly } from './Raytracer';
 
 const createMapOptions = (maps) => {
   return {
@@ -13,16 +14,19 @@ const createMapOptions = (maps) => {
 }
 
 const MapWrapper = () => {
-  const { latLngPair } = useAppContext();
+  const { latLngPair, setInDistrict } = useAppContext();
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
   const [locationMarker, setLocationMarker] = useState(null);
+  const [polygon, setPolygon] = useState(null);
 
   useEffect(() => {
     if (latLngPair[0] > 0) {
       addMarker(latLngPair);
+      if (maps !== null)
+      setInDistrict(pointInPoly(maps, latLngPair, polygon))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latLngPair])
 
   const addMarker = (latLngPair) => {
@@ -30,7 +34,7 @@ const MapWrapper = () => {
       locationMarker.setMap(null);
       setLocationMarker(null);
     }
-    if (maps !== null && map !== null) {
+    if ((maps && map) !== null) {
       const newLocationMarker = new maps.Marker({
         position: {
           lat: latLngPair[0],
@@ -42,6 +46,7 @@ const MapWrapper = () => {
       setLocationMarker(newLocationMarker)
     }
   }
+
   const onGoogleApiLoaded = (map, maps) => {
     // Construct the polygon.
     const countyBoardDist1 = new maps.Polygon({
@@ -52,10 +57,9 @@ const MapWrapper = () => {
       fillColor: "#55d6be",
       fillOpacity: 0.35
     });
+    setPolygon(countyBoardDist1)
     countyBoardDist1.setMap(map);
   };
-
-
 
   return (
     <GoogleMapReact

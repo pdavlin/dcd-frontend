@@ -4,7 +4,8 @@ export const AppContext = createContext({});
 
 export const AppContextProvider = (props) => {
     const [latLngPair, setLatLngPair] = useState([41.2570498,-95.9403931]);
-    return <AppContext.Provider value={{latLngPair, setLatLngPair}} {...props} />;
+    const [inDistrict, setInDistrict] = useState(false);
+    return <AppContext.Provider value={{latLngPair, setLatLngPair, inDistrict, setInDistrict}} {...props} />;
 };
 
 export const useAppContext = () => {

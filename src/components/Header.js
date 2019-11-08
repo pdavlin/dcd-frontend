@@ -9,7 +9,8 @@ export const Header = () => {
       <Card
         p={15}
         sx={{
-          borderRadius: 12
+          borderRadius: 12,
+          maxWidth:427.217
         }}>
         <Heading>Douglas County Democracy Project</Heading>
         <br />
