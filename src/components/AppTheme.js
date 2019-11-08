@@ -92,7 +92,8 @@ export const appTheme = {
       fontWeight: 'bold',
       color: 'black',
       bg: 'gray',
-      borderRadius: 'default'
+      borderRadius: 'default',
+      cursor: 'pointer'
     },
     outline: {
       variant: 'buttons.primary',
