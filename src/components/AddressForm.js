@@ -5,7 +5,7 @@ import { getLatLngFromAddress } from '../services/MapsApiService';
 import { useAppContext } from './AppContext';
 
 const elections = {
-  '1': { name: 'Douglas County Board' }
+  '1': { name: 'Douglas County Board of Commissioners' }
 }
 
 export const AddressForm = () => {
@@ -49,7 +49,7 @@ export const AddressForm = () => {
           <Select
             id='election'
             name='election'
-            defaultValue='Douglas County Board'
+            defaultValue='Douglas County Board of Commissioners'
             sx={{
               ':focus': {
                 borderColor: 'primary',
@@ -84,7 +84,7 @@ export const AddressForm = () => {
             </div> 
             : <div>
             <Text>
-              Your County Board district is {inDistrict}. 
+              Your Douglas County Board of Commissioners district is {inDistrict}. 
             </Text> 
             <br />
           </div> 
