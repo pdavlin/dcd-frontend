@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { useAppContext } from './AppContext';
-import { COUNTY_BOARD_1_COORDS } from './Consts';
-import { pointInPoly } from './Raytracer';
+import { COUNTY_BOARD, COUNTY_BOARD_1_COORDS } from './Consts';
+import { pointInPoly } from './Raycaster';
 
 const createMapOptions = (maps) => {
   return {
@@ -23,8 +23,9 @@ const MapWrapper = () => {
   useEffect(() => {
     if (latLngPair[0] > 0) {
       addMarker(latLngPair);
-      if (maps !== null)
-      setInDistrict(pointInPoly(maps, latLngPair, polygon))
+      if (maps !== null) {
+        setInDistrict(findPointIfInDistrictLayer(maps, latLngPair));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latLngPair])
@@ -46,19 +47,41 @@ const MapWrapper = () => {
       setLocationMarker(newLocationMarker)
     }
   }
+  const  findPointIfInDistrictLayer = (maps, latLngPair) => {
+    for (let district of COUNTY_BOARD) {
+      if (pointInPoly(maps, latLngPair, district.polygon)) {
+        district.polygon.setMap(map)
+        return district.name;
+      }
+    }
+    console.log('not found!');
+    return null;
+  }
 
   const onGoogleApiLoaded = (map, maps) => {
     // Construct the polygon.
-    const countyBoardDist1 = new maps.Polygon({
-      paths: COUNTY_BOARD_1_COORDS,
-      strokeColor: "#55d6be",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#55d6be",
-      fillOpacity: 0.35
-    });
-    setPolygon(countyBoardDist1)
-    countyBoardDist1.setMap(map);
+    for (let district of COUNTY_BOARD) {
+      console.log(typeof district)
+      district.polygon = new maps.Polygon({
+        paths: district.coords,
+        strokeColor: "#55d6be",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#55d6be",
+        fillOpacity: 0.35
+      })
+      setPolygon(district.polygon)
+    }
+    // const countyBoardDist1 = new maps.Polygon({
+    //   paths: COUNTY_BOARD_1_COORDS,
+    //   strokeColor: "#55d6be",
+    //   strokeOpacity: 0.8,
+    //   strokeWeight: 2,
+    //   fillColor: "#55d6be",
+    //   fillOpacity: 0.35
+    // });
+    // setPolygon(countyBoardDist1)
+    // countyBoardDist1.setMap(map);
   };
 
   return (
@@ -83,3 +106,5 @@ const MapWrapper = () => {
 };
 
 export default MapWrapper;
+
+

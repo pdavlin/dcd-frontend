@@ -912,3 +912,20 @@ export const COUNTY_BOARD_2_COORDS = [
     lat: 41.19078175238702
   }
 ]
+
+export const COUNTY_BOARD = [
+  {
+    id: 'dcbc-1',
+    name: 'District 1',
+    polygon: {},
+    coords:
+      COUNTY_BOARD_1_COORDS,
+  },
+  {
+    id: 'dcbc-2',
+    name: 'District 2',
+    polygon: {},
+    coords:
+      COUNTY_BOARD_2_COORDS
+  }
+]

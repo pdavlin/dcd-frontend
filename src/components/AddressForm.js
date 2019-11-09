@@ -5,10 +5,10 @@ import { getLatLngFromAddress } from '../services/MapsApiService';
 import { useAppContext } from './AppContext';
 
 const elections = {
-  '1': {name: 'Douglas County Board'}
+  '1': { name: 'Douglas County Board' }
 }
 
-export const AddressForm = (props) => {
+export const AddressForm = () => {
 
   const { setLatLngPair, inDistrict } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
@@ -18,7 +18,6 @@ export const AddressForm = (props) => {
     event.preventDefault();
     await getLatLngFromAddress(address).then(response => {
       if (response.data.status !== "REQUEST_DENIED") {
-        console.log(response);
         setLatLngPair([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
       } else console.error("uh oh", response)
     })
@@ -69,30 +68,31 @@ export const AddressForm = (props) => {
           variant='hoverable'
           width={1 / 2}
           mt={1}
-          sx={{
-            ':hover, :focus': {
-              backgroundColor: 'primary',
-              color: 'background'
-            }
-          }} >Submit</Button>
+          >Submit</Button>
       </Box>
     )
   } else {
     return (
       <div>
         {
-          !inDistrict ? <div><Text color={'error'}> Your address wasn't found in any of the districts for that position. Please try another address. </Text> <br /></div> : null
+          (inDistrict === null) ?
+            <div>
+              <Text color={'error'}>
+                Your address wasn't found in any of the districts for that position. Please try another address. 
+              </Text> 
+              <br />
+            </div> 
+            : <div>
+            <Text>
+              Your County Board district is {inDistrict}. 
+            </Text> 
+            <br />
+          </div> 
         }
         <Button
           variant='hoverable'
           width={1 / 2}
           mt={1}
-          sx={{
-            ':hover, :focus': {
-              backgroundColor: 'primary',
-              color: 'background'
-            }
-          }}
           onClick={
             newSearch
           }>

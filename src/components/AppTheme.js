@@ -94,7 +94,11 @@ export const appTheme = {
       color: 'black',
       bg: 'gray',
       borderRadius: 'default',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover, :focus': {
+        backgroundColor: 'primary',
+        color: 'background'
+      }
     },
     outline: {
       variant: 'buttons.primary',
