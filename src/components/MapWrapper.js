@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { useAppContext } from './AppContext';
-import { COUNTY_BOARD, COUNTY_BOARD_1_COORDS } from './Consts';
+import { COUNTY_BOARD } from './Consts';
 import { pointInPoly } from './Raycaster';
 
 const createMapOptions = (maps) => {
@@ -18,7 +18,7 @@ const MapWrapper = () => {
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
   const [locationMarker, setLocationMarker] = useState(null);
-  const [polygon, setPolygon] = useState(null);
+  const [displayedPolygon, setDisplayedPolygon] = useState(null);
 
   useEffect(() => {
     if (latLngPair[0] > 0) {
@@ -48,6 +48,8 @@ const MapWrapper = () => {
     }
   }
   const  findPointIfInDistrictLayer = (maps, latLngPair) => {
+    // TODO: find a way to remove an existing polygon when a new one is
+    // displayed, as needed.
     for (let district of COUNTY_BOARD) {
       if (pointInPoly(maps, latLngPair, district.polygon)) {
         district.polygon.setMap(map)
@@ -59,7 +61,6 @@ const MapWrapper = () => {
   }
 
   const onGoogleApiLoaded = (map, maps) => {
-    // Construct the polygon.
     for (let district of COUNTY_BOARD) {
       console.log(typeof district)
       district.polygon = new maps.Polygon({
@@ -70,18 +71,8 @@ const MapWrapper = () => {
         fillColor: "#55d6be",
         fillOpacity: 0.35
       })
-      setPolygon(district.polygon)
+      setDisplayedPolygon(district.id)
     }
-    // const countyBoardDist1 = new maps.Polygon({
-    //   paths: COUNTY_BOARD_1_COORDS,
-    //   strokeColor: "#55d6be",
-    //   strokeOpacity: 0.8,
-    //   strokeWeight: 2,
-    //   fillColor: "#55d6be",
-    //   fillOpacity: 0.35
-    // });
-    // setPolygon(countyBoardDist1)
-    // countyBoardDist1.setMap(map);
   };
 
   return (
