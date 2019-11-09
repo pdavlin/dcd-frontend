@@ -10,7 +10,7 @@ export const Header = () => {
         p={15}
         sx={{
           borderRadius: 12,
-          maxWidth:427.217
+          maxWidth:431.217
         }}>
         <Heading>Douglas County Democracy Project</Heading>
         <br />
