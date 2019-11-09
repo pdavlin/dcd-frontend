@@ -18,7 +18,7 @@ const MapWrapper = () => {
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
   const [locationMarker, setLocationMarker] = useState(null);
-  const [displayedPolygon, setDisplayedPolygon] = useState(null);
+  const [displayedPolygonId, setDisplayedPolygonId] = useState(null);
 
   useEffect(() => {
     if (latLngPair[0] > 0) {
@@ -48,11 +48,16 @@ const MapWrapper = () => {
     }
   }
   const  findPointIfInDistrictLayer = (maps, latLngPair) => {
-    // TODO: find a way to remove an existing polygon when a new one is
-    // displayed, as needed.
+    if (displayedPolygonId !== null) {
+      const d = COUNTY_BOARD.find(district => district.id === displayedPolygonId);
+      console.log(d);
+      d.polygon.setMap(null);
+      setDisplayedPolygonId(null);
+    }
     for (let district of COUNTY_BOARD) {
       if (pointInPoly(maps, latLngPair, district.polygon)) {
         district.polygon.setMap(map)
+        setDisplayedPolygonId(district.id);
         return district.name;
       }
     }
@@ -71,7 +76,7 @@ const MapWrapper = () => {
         fillColor: "#55d6be",
         fillOpacity: 0.35
       })
-      setDisplayedPolygon(district.id)
+      setDisplayedPolygonId(district.id)
     }
   };
 
