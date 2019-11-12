@@ -1,0 +1,28 @@
+
+.line {
+  display: inline-block;
+  width: 60px;
+  height: 15px;
+  border-radius: 60px;
+  background-color: #55d6be;
+}
+.load-2 {
+  padding-top: 10px;
+  /* text-align: center; */
+}
+
+.load-2 .line:nth-last-child(1) {
+  animation: loadingB 1.5s 1s infinite;
+}
+.load-2 .line:nth-last-child(2) {
+  animation: loadingB 1.5s 0.5s infinite;
+}
+.load-2 .line:nth-last-child(3) {
+  animation: loadingB 1.5s 0s infinite;
+}
+
+@keyframes loadingB {
+  0% {width: 60px;}
+  50% {width: 140px;}
+  100% {width: 60px;}
+}

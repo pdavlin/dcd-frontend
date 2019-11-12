@@ -10,12 +10,13 @@ const elections = {
 
 export const AddressForm = () => {
 
-  const { setLatLngPair, inDistrict } = useAppContext();
+  const { setLatLngPair, inDistrict, setIsLoading } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     await getLatLngFromAddress(address).then(response => {
       if (response.data.status !== "REQUEST_DENIED") {
         setLatLngPair([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
