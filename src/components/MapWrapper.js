@@ -14,7 +14,7 @@ const createMapOptions = (maps) => {
 }
 
 const MapWrapper = () => {
-  const { latLngPair, setInDistrict } = useAppContext();
+  const { latLngPair, setInDistrict, setIsLoading } = useAppContext();
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
   const [locationMarker, setLocationMarker] = useState(null);
@@ -27,6 +27,7 @@ const MapWrapper = () => {
         setInDistrict(findPointIfInDistrictLayer(maps, latLngPair));
       }
     }
+    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latLngPair])
 
@@ -47,7 +48,7 @@ const MapWrapper = () => {
       setLocationMarker(newLocationMarker)
     }
   }
-  const  findPointIfInDistrictLayer = (maps, latLngPair) => {
+  const findPointIfInDistrictLayer = (maps, latLngPair) => {
     if (displayedPolygonId !== null) {
       const d = COUNTY_BOARD.find(district => district.id === displayedPolygonId);
       console.log(d);
