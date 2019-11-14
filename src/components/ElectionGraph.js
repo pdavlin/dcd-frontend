@@ -1,39 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { VictoryStack, VictoryBar, VictoryTooltip } from 'victory';
+import { Text } from 'rebass';
+
+
 
 export const ElectionGraph = (props) => {
-  const results = {
-    win: props.win,
-    lose: props.lose,
-    other: props.other
-  }
+  const [displayName, setDisplayName] = useState(null);
+  const myDataset = [
+    [
+      { x: "a", y: props.election.win.votes, name: props.election.win.name }
+    ],
+    [
+      { x: "a", y: props.election.lose.votes, name: props.election.lose.name }
+    ],
+    [
+      { x: "a", y: props.election.other.votes, name: props.election.other.name }
+    ]
+  ];
+
   return (
-    <VictoryStack
-      labelComponent={
-        <VictoryTooltip
-          dx={(datum) => { return -(datum.y * 5)}}
-          orientation={"bottom"}
-        />
-      }
-      horizontal={true}
-      height={30}
-      colorScale={["tomato", "orange", "gold"]}
-    >
-      <VictoryBar
-        labelComponent={<VictoryTooltip />}
-        barWidth={15}
-        data={[{ x: "a", y: results.win, label: "winner" }]}
-      />
-      <VictoryBar
-        labelComponent={<VictoryTooltip />}
-        barWidth={15}
-        data={[{ x: "a", y: results.lose, label: "loser" }]}
-      />
-      <VictoryBar
-        labelComponent={<VictoryTooltip />}
-        barWidth={15}
-        data={[{ x: "a", y: results.other, label: "other" }]}
-      />
-    </VictoryStack>
+    <div>
+      <div textAlign={'center'}>
+        <Text textAlign={'center'} fontWeight={'bold'}>2016 Results</Text>
+        {displayName !== null ? <Text textAlign={'center'}>{displayName}</Text> : <Text textAlign={'center'} sx={{ fontStyle: 'italic' }}>Hover over data for more info</Text>}
+      </div>
+      <VictoryStack
+        horizontal={true}
+        height={60}
+        colorScale={["tomato", "orange", "gold"]}
+        style={{
+          data: { padding: 10 }
+        }}
+
+      >
+        {myDataset.map((data, i) => {
+          return <VictoryBar
+            data={data}
+            key={i}
+            style={{
+              data: { width: 25 }
+            }}
+            events={[{
+              target: "data",
+              eventHandlers: {
+                onMouseOver: (data, datum) => {
+                  setDisplayName(datum.data[0].name + ': ' + datum.data[0].y);
+                  return [
+                    {
+                      target: "data",
+                      mutation: () => ({ style: { fill: '#55d6be', width: 35 } })
+                    }
+                  ];
+                },
+                onMouseOut: () => {
+                  setDisplayName(null);
+                  return [
+                    {
+                      target: "data",
+                      mutation: () => { }
+                    }
+                  ];
+                }
+              }
+            }]}
+          />;
+        })}
+      </VictoryStack>
+    </div>
   )
 }

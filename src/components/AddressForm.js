@@ -3,6 +3,7 @@ import { Box, Button, Text } from 'rebass';
 import { Input, Label, Select } from '@rebass/forms';
 import { getLatLngFromAddress } from '../services/MapsApiService';
 import { useAppContext } from './AppContext';
+import { ElectionGraph } from './ElectionGraph';
 
 const elections = {
   '1': { name: 'Douglas County Board of Commissioners' }
@@ -69,7 +70,7 @@ export const AddressForm = () => {
           variant='hoverable'
           width={1 / 2}
           mt={1}
-          >Submit</Button>
+        >Submit</Button>
       </Box>
     )
   } else {
@@ -79,16 +80,23 @@ export const AddressForm = () => {
           (inDistrict === null) ?
             <div>
               <Text color={'error'}>
-                Your address wasn't found in any of the districts for that position. Please try another address. 
-              </Text> 
+                Your address wasn't found in any of the districts for that position. Please try another address.
+              </Text>
               <br />
-            </div> 
+            </div>
             : <div>
-            <Text>
-              Your Douglas County Board of Commissioners district is {inDistrict}. 
-            </Text> 
-            <br />
-          </div> 
+              <Text>
+                Your Douglas County Board of Commissioners district is {inDistrict}.
+            </Text>
+              <ElectionGraph
+                election={{
+                  win: { votes: 18452, name: "Winner!!" },
+                  lose: { votes: 11167, name: "Loser 🙁" },
+                  other: { votes: 1642, name: "Others?" }
+                }}
+              />
+              <br />
+            </div>
         }
         <Button
           variant='hoverable'

@@ -21,16 +21,7 @@ export const Header = () => {
         <br />
         <AddressForm />
         {isLoading ? <LoadingBar /> : null}
-        <ElectionGraph
-          win={34000}
-          lose={24000}
-          other={400}
-          />
-          <ElectionGraph
-          win={20}
-          lose={10}
-          other={5}
-          />
+        <br />
       </Card>
     </div>
   )
