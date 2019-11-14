@@ -20,9 +20,9 @@ export const ElectionGraph = (props) => {
 
   return (
     <div>
-      <div textAlign={'center'}>
+      <div>
         <Text textAlign={'center'} fontWeight={'bold'}>2016 Results</Text>
-        {displayName !== null ? <Text textAlign={'center'}>{displayName}</Text> : <Text textAlign={'center'} sx={{ fontStyle: 'italic' }}>Hover over data for more info</Text>}
+        {displayName !== null ? <Text textAlign={'center'}>{displayName}</Text> : <Text textAlign={'center'} color={'gray_text'} sx={{ fontStyle: 'italic' }}>Hover over data for more info</Text>}
       </div>
       <VictoryStack
         horizontal={true}
