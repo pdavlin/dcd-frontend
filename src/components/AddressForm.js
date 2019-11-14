@@ -91,7 +91,7 @@ export const AddressForm = () => {
               <ElectionGraph
                 election={{
                   win: { votes: 18452, name: "Winner!!" },
-                  lose: { votes: 11167, name: "Loser 🙁" },
+                  lose: { votes: 11167, name: "Loser" },
                   other: { votes: 1642, name: "Others?" }
                 }}
               />

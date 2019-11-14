@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VictoryStack, VictoryBar, VictoryTooltip } from 'victory';
+import { VictoryStack, VictoryBar } from 'victory';
 import { Text } from 'rebass';
 
 

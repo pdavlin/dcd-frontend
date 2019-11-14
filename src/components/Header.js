@@ -4,7 +4,6 @@ import { Card, Heading } from 'rebass';
 import { AddressForm } from './AddressForm';
 import { LoadingBar } from './LoadingBar';
 import { useAppContext } from './AppContext';
-import { ElectionGraph } from './ElectionGraph';
 
 export const Header = () => {
   const { isLoading } = useAppContext();
