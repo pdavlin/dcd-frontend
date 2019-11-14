@@ -66,6 +66,7 @@ export const ElectionGraph = (props) => {
           />;
         })}
       </VictoryStack>
+      <Text textAlign={'center'} color={'gray_text'} sx={{ fontStyle: 'italic' }}>Note: placeholder data</Text>
     </div>
   )
 }

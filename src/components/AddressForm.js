@@ -11,23 +11,25 @@ const elections = {
 
 export const AddressForm = () => {
 
-  const { setLatLngPair, inDistrict, setIsLoading } = useAppContext();
+  const { setLatLngPair, inDistrict, isLoading, setIsLoading } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [displayResults, setDisplayResults] = useState(false);
   const [displayError, setDisplayError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (inDistrict === null) {
+    if (isLoading === false && inDistrict === null) {
       setDisplayError(true);
       setErrorMessage('That address wasn\'t found in any of the districts for that position. Please try another address.')
+    } else if (isLoading === false && inDistrict !== null) {
+      setDisplayResults(true);
     }
-    else if (displayError) {
+  }, [inDistrict, isLoading])
 
-    }
-  }, [displayError, inDistrict])
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setDisplayResults(false);
     setIsSubmitted(true);
     setIsLoading(true);
     await getLatLngFromAddress(address).then(response => {
@@ -94,30 +96,36 @@ export const AddressForm = () => {
     return (
       <div>
         {
-          (!displayError) ?
+          displayError ?
+            <Text color={'error'}>{errorMessage}</Text> : null
+        }
+        {
+          displayResults ?
             <div>
               <Text>
                 Your Douglas County Board of Commissioners district is {inDistrict}.
               </Text>
               <ElectionGraph
                 election={{
-                  win: { votes: 18452, name: "Winner!!" },
-                  lose: { votes: 11167, name: "Loser" },
-                  other: { votes: 1642, name: "Others?" }
+                  win: { votes: 18452, name: "Winning Candidate" },
+                  lose: { votes: 11167, name: "Losing Candidate" },
+                  other: { votes: 1642, name: "Other votes" }
                 }}
               />
               <br />
-            </div> : <Text color={'error'}>{errorMessage}</Text>
+            </div> : null
         }
-        <Button
-          variant='hoverable'
-          width={1 / 2}
-          mt={1}
-          onClick={
-            newSearch
-          }>
-          New Search
-      </Button>
+        {!isLoading ?
+          <Button
+            variant='hoverable'
+            width={1 / 2}
+            mt={1}
+            onClick={
+              newSearch
+            }>
+            New Search
+          </Button> : null
+        }
       </div>
     )
   }
