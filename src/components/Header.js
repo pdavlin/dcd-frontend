@@ -20,6 +20,7 @@ export const Header = () => {
         <br />
         <AddressForm />
         {isLoading ? <LoadingBar /> : null}
+        <br />
       </Card>
     </div>
   )

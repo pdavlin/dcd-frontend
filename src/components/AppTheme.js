@@ -1,17 +1,18 @@
 // default theme preset
 export const appTheme = {
   colors: {
-    text: '#000',
+    text: '#333',
     background: '#fff',
     primary: '#55d6be',
     secondary: '#ff686b',
     error: '#cc0000',
     muted: '#f6f6f9',
     gray: '#dddddf',
+    gray_text: '#666',
     highlight: 'hsla(205, 100%, 40%, 0.125)'
   },
   fonts: {
-    body: 'recursive, system-ui, sans-serif',
+    body: 'system-ui, sans-serif',
     heading: 'inherit',
     monospace: 'Menlo, monospace'
   },
