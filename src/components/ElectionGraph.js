@@ -43,11 +43,6 @@ export const ElectionGraph = (props) => {
         horizontal={true}
         height={60}
         colorScale={["#0F5257", "#E07A5F", "#3D405B", "#0B3142"]}
-        style={{
-          data: {
-            padding: 10
-          }
-        }}
       >
         {dataset.map((data, i) => {
           return <VictoryBar

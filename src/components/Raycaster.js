@@ -10,7 +10,6 @@
  * @see https://github.com/tparkin/Google-Maps-Point-in-Polygon
  */
 export const pointInPoly = (maps, latLngPair, districtPolygon) => {
-  console.log(latLngPair);
   const getBounds = () => {
     var bounds = new maps.LatLngBounds(),
       paths = districtPolygon.getPaths(),
@@ -47,7 +46,6 @@ export const pointInPoly = (maps, latLngPair, districtPolygon) => {
       }
     } else if (latLngPair.length === 1) {
       bounds = getBounds();
-      console.log(bounds);
 
       if (!bounds && !bounds.contains(latLng)) {
         return false;
@@ -55,7 +53,7 @@ export const pointInPoly = (maps, latLngPair, districtPolygon) => {
       lat = latLng.lat();
       lng = latLng.lng();
     } else {
-      console.log("Wrong number of inputs in google.maps.Polygon.prototype.contains.LatLng");
+      console.error("Wrong number of inputs in google.maps.Polygon.prototype.contains.LatLng");
     }
 
     // Raycast point in polygon method

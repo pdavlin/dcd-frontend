@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {dcb, sen} from '../components/Consts';
 
 const BASE_URL = 'http://dcd.davlin.io/api/';
 
@@ -43,4 +44,18 @@ export const getResultsForDistrict = async (dist) => {
     );
   });
   return districtResults;
+}
+
+/**
+ * Maps a list of district bounds retrieved from the backend into a single object for display.
+ * @param {string} dist Formatted as [three-letter district ID] (e.g., `dcb`)
+ * @returns {[{electionDate: string, electionResults: resultsObject}]} Election data array
+ */
+export const getDistrictCoordsForId = async (id) => {
+  if (id === 'dcb') {
+    return dcb;
+  } else if (id === 'sen') {
+    return sen;
+  }
+
 }
