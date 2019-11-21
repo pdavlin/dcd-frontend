@@ -6,7 +6,17 @@ import { useAppContext } from './AppContext';
 import { ElectionGraph } from './ElectionGraph';
 
 const elections = {
-  '1': { name: 'Douglas County Board of Commissioners' }
+  '1': { name: 'Douglas County Board of Commissioners', id: 'dcb' }
+}
+
+const placeholderElectionData = {
+  electionDate: 2018,
+  electionResults: [
+    { "ballot_id": 73, "election_id": "sen-1-2018", "issue_name": "Jane Raybould", "party": "D", "votes": 64023, "winning_issue": 1 },
+    { "ballot_id": 74, "election_id": "sen-1-2018", "issue_name": "Jim Schulz", "party": "I", "votes": 4988, "winning_issue": 0 },
+    { "ballot_id": 75, "election_id": "sen-1-2018", "issue_name": "Write In", "party": "O", "votes": 77, "winning_issue": 0 },
+    { "ballot_id": 76, "election_id": "sen-1-2018", "issue_name": "Deb Fischer", "party": "R", "votes": 60553, "winning_issue": 0 }
+  ]
 }
 /**
  * Renders an interactive form for entering an address and displaying lookup results.
@@ -15,7 +25,7 @@ export const AddressForm = () => {
 
   const { setLatLngPair, inDistrict, isLoading, setIsLoading } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
-  const [lastAddress, setLastAddress] = useState(null);
+  const [lastAddress, setLastAddress] = useState(String(null));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [displayResults, setDisplayResults] = useState(false);
   const [displayError, setDisplayError] = useState(false);
@@ -24,11 +34,11 @@ export const AddressForm = () => {
   useEffect(() => {
     if (isLoading === false && inDistrict === null) {
       setDisplayError(true);
-      setErrorMessage('That address wasn\'t found in any of the districts for that position. Please try another address.')
+      setErrorMessage('That address wasn\'t found in any of the districts for that position. Please try another address.');
     } else if (isLoading === false && inDistrict !== null) {
       setDisplayResults(true);
     }
-  }, [inDistrict, isLoading])
+  }, [inDistrict, isLoading]);
 
   /**
    * Submits new address info to backend service for geolocation, and awaits results for display.
@@ -38,10 +48,10 @@ export const AddressForm = () => {
       if (response.data.status !== "REQUEST_DENIED") {
         setLatLngPair([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
       } else {
-        console.error("API Error", response)
+        console.error("API Error", response);
         setErrorMessage('There was a problem contacting the Google Maps API.');
         setDisplayError(true);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     });
   }
@@ -49,6 +59,8 @@ export const AddressForm = () => {
   /**
    * Sets loading state in UI, organizes information, and sends to backend if needed. 
    * @param {*} event 
+   * 
+   * @todo incorporate election data fetching from backend
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -125,11 +137,7 @@ export const AddressForm = () => {
                 Your Douglas County Board of Commissioners district is {inDistrict}.
               </Text>
               <ElectionGraph
-                election={{
-                  win: { votes: 18452, name: "Winning Candidate" },
-                  lose: { votes: 11167, name: "Losing Candidate" },
-                  other: { votes: 1642, name: "Other votes" }
-                }}
+                results={placeholderElectionData}
               />
               <br />
             </div> : null

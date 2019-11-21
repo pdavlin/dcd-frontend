@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { VictoryStack, VictoryBar } from 'victory';
 import { Text } from 'rebass';
+
+// placeholde
 
 /**
  * Renders a graph object 
@@ -8,34 +10,46 @@ import { Text } from 'rebass';
  */
 export const ElectionGraph = (props) => {
   const [displayName, setDisplayName] = useState(null);
-  const myDataset = [
-    [
-      { x: "a", y: props.election.win.votes, name: props.election.win.name }
-    ],
-    [
-      { x: "a", y: props.election.lose.votes, name: props.election.lose.name }
-    ],
-    [
-      { x: "a", y: props.election.other.votes, name: props.election.other.name }
-    ]
-  ];
+  const [dataset, setDataset] = useState([]);
+  const [winInfo, setWinInfo] = useState(String(null));
+  useEffect(() => {
+    let newDataset = [];
+    props.results.electionResults.forEach((resultSet) => {
+      if (resultSet.winning_issue === 1) {
+        setWinInfo(`Winner: ${resultSet.issue_name} (${resultSet.votes} votes)`);
+      }
+      newDataset.push(
+        [
+          { x: "a", y: resultSet.votes, name: resultSet.issue_name }
+        ]
+      );
+    });
+    setDataset(newDataset);
+  }, [])
 
   return (
     <div>
       <div>
-        <Text textAlign={'center'} fontWeight={'bold'}>2016 Results</Text>
-        {displayName !== null ? <Text textAlign={'center'}>{displayName}</Text> : <Text textAlign={'center'} color={'gray_text'} sx={{ fontStyle: 'italic' }}>Hover over data for more info</Text>}
+        <Text textAlign={'center'} fontWeight={'bold'}>{props.results.electionDate} Results</Text>
+        {displayName !== null ?
+          <Text textAlign={'center'}>{displayName}</Text>
+          :
+          <Text textAlign={'center'} color={'gray_text'} sx={{ fontStyle: 'italic' }}>
+            Hover over data for more info
+          </Text>
+        }
       </div>
       <VictoryStack
         horizontal={true}
         height={60}
-        colorScale={["tomato", "orange", "gold"]}
+        colorScale={["#0F5257", "#E07A5F", "#3D405B", "#0B3142"]}
         style={{
-          data: { padding: 10 }
+          data: {
+            padding: 10
+          }
         }}
-
       >
-        {myDataset.map((data, i) => {
+        {dataset.map((data, i) => {
           return <VictoryBar
             data={data}
             key={i}
@@ -68,7 +82,7 @@ export const ElectionGraph = (props) => {
           />;
         })}
       </VictoryStack>
-      <Text textAlign={'center'} color={'gray_text'} sx={{ fontStyle: 'italic' }}>Note: placeholder data</Text>
+      <Text textAlign={'center'} color={'gray_text'} sx={{ fontStyle: 'italic' }}>{winInfo}</Text>
     </div>
   )
 }
