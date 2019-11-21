@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { VictoryStack, VictoryBar } from 'victory';
 import { Text } from 'rebass';
 
-// placeholde
-
 /**
  * Renders a graph object 
  * @param {{electionDate: string, electionResults: resultsObject}}  props Election data object
@@ -20,11 +18,12 @@ export const ElectionGraph = (props) => {
       }
       newDataset.push(
         [
-          { x: "a", y: resultSet.votes, name: resultSet.issue_name }
+          { x: "a", y: resultSet.votes, name: `${resultSet.issue_name} (${resultSet.party})` }
         ]
       );
     });
     setDataset(newDataset);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
