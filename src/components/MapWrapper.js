@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { useAppContext } from './AppContext';
-import { COUNTY_BOARD } from './Consts';
+import { dcb } from './Consts';
 import { pointInPoly } from './Raycaster';
 
 /**
@@ -21,22 +21,34 @@ const createMapOptions = (maps) => {
  * Returns a UI component for Google Maps for display.
  */
 const MapWrapper = () => {
-  const { latLngPair, setInDistrict, setIsLoading } = useAppContext();
+  const { latLngPair, setInDistrict, setIsLoading, loadedDistrictData } = useAppContext();
   const [map, setMap] = useState(null);
   const [maps, setMaps] = useState(null);
   const [locationMarker, setLocationMarker] = useState(null);
   const [displayedPolygonId, setDisplayedPolygonId] = useState(null);
+  const [loadedPolygon, setLoadedPolygon] = useState(null);
 
   useEffect(() => {
-    if (latLngPair[0] > 0) {
-      addMarker(latLngPair);
-      if (maps !== null) {
-        setInDistrict(findPointIfInDistrictLayer(maps, latLngPair));
+    const process = async () => {
+      if (latLngPair[0] > 0) {
+        addMarker(latLngPair);
+        if (maps !== null) {
+          await loadPolygonsIntoDistrictData(map, maps);
+          setInDistrict(findPointIfInDistrictLayer(maps, latLngPair));
+        }
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
+    process();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latLngPair])
+
+  // useEffect(() => {
+  //   console.log(loadedDistrictData);
+  //   if ((map && maps && loadedDistrictData) !== null) {
+  //     loadPolygonsIntoDistrictData(map, maps);
+  //   }
+  // }, [loadedDistrictData])
 
   /**
    * Adds a marker on the map in Google Maps UI.
@@ -66,15 +78,17 @@ const MapWrapper = () => {
    */
   const findPointIfInDistrictLayer = (maps, latLngPair) => {
     if (displayedPolygonId !== null) {
-      const d = COUNTY_BOARD.find(district => district.id === displayedPolygonId);
+      const d = loadedDistrictData.find(district => district.id === displayedPolygonId);
       console.log(d);
-      d.polygon.setMap(null);
+      // d.polygon.setMap(null);
+      loadedPolygon.setMap(null);
       setDisplayedPolygonId(null);
     }
-    for (let district of COUNTY_BOARD) {
+    for (let district of loadedDistrictData) {
       if (pointInPoly(maps, latLngPair, district.polygon)) {
         district.polygon.setMap(map)
         setDisplayedPolygonId(district.id);
+        setLoadedPolygon(district.polygon);
         return district.name;
       }
     }
@@ -89,9 +103,9 @@ const MapWrapper = () => {
    * @todo When district data is moved to an API call, this will need to be reworked at request time to 
    *       load new polygon data into active district, as needed.
    */
-  const onGoogleApiLoaded = (map, maps) => {
-    for (let district of COUNTY_BOARD) {
-      console.log(typeof district)
+  const loadPolygonsIntoDistrictData = async (map, maps) => {
+    for (let district of loadedDistrictData) {
+      console.log(district)
       district.polygon = new maps.Polygon({
         paths: district.coords,
         strokeColor: "#55d6be",
@@ -118,7 +132,6 @@ const MapWrapper = () => {
         ({ map, maps }) => {
           setMap(map)
           setMaps(maps)
-          onGoogleApiLoaded(map, maps)
         }
       }
     />

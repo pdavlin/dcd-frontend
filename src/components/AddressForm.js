@@ -4,9 +4,11 @@ import { Input, Label, Select } from '@rebass/forms';
 import { getLatLngFromAddress } from '../services/MapsApiService';
 import { useAppContext } from './AppContext';
 import { ElectionGraph } from './ElectionGraph';
+import { getDistrictCoordsForId } from '../services/BackendRequestService';
 
 const elections = {
-  '1': { name: 'Douglas County Board of Commissioners', id: 'dcb' }
+  'dcb': 'Douglas County Board of Commissioners',
+  'sen': 'United States Senate'
 }
 
 const placeholderElectionData = {
@@ -23,13 +25,27 @@ const placeholderElectionData = {
  */
 export const AddressForm = () => {
 
-  const { setLatLngPair, inDistrict, isLoading, setIsLoading } = useAppContext();
+  const {
+    setLatLngPair,
+    inDistrict,
+    isLoading, setIsLoading,
+    setLoadedDistrictData,
+    selectedElectionType, setSelectedElectionType,
+    lastSelectedElectionType, setLastSelectedElectionType
+  } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
   const [lastAddress, setLastAddress] = useState(String(null));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [displayResults, setDisplayResults] = useState(false);
   const [displayError, setDisplayError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // useEffect(() => {
+  //   const initializeLoadedData = async () => {
+  //     setLoadedDistrictData(await getDistrictCoordsForId(selectedElectionType));
+  //   }
+  //   initializeLoadedData();
+  // }, [])
 
   useEffect(() => {
     if (isLoading === false && inDistrict === null) {
@@ -67,7 +83,12 @@ export const AddressForm = () => {
     setDisplayResults(false);
     setIsSubmitted(true);
     setIsLoading(true);
-    if (address !== lastAddress) {
+    if (selectedElectionType !== lastSelectedElectionType) {
+      await setLastSelectedElectionType(selectedElectionType);
+      let someData = await getDistrictCoordsForId(selectedElectionType);
+      await setLoadedDistrictData(someData);
+    }
+    if (address !== lastAddress || selectedElectionType !== lastSelectedElectionType) {
       setLastAddress(address);
       await submitNewAddress();
     } else {
@@ -101,17 +122,20 @@ export const AddressForm = () => {
           <Select
             id='election'
             name='election'
-            defaultValue='Douglas County Board of Commissioners'
+            defaultValue={lastSelectedElectionType}
             sx={{
               ':focus': {
                 borderColor: 'primary',
                 boxShadow: '0 0 0 2px #55d6be'
               }
-            }}>
+            }}
+            onChange={({ target }) => { setSelectedElectionType(target.value) }}
+          >
             {Object.entries(elections).map(([key, election]) => (
               <option
-                key={key}>
-                {election.name}
+                key={key}
+                value={key}>
+                {election}
               </option>
             ))}
           </Select>

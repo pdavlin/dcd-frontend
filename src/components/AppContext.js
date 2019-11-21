@@ -13,7 +13,16 @@ export const AppContextProvider = (props) => {
     const [latLngPair, setLatLngPair] = useState([41.2570498,-95.9403931]);
     const [inDistrict, setInDistrict] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    return <AppContext.Provider value={{latLngPair, setLatLngPair, inDistrict, setInDistrict, isLoading, setIsLoading}} {...props} />;
+    const [loadedDistrictData, setLoadedDistrictData] = useState(null);
+    const [lastSelectedElectionType, setLastSelectedElectionType] = useState(String(null));
+    const [selectedElectionType, setSelectedElectionType] = useState('dcb');
+    return <AppContext.Provider value={{
+        latLngPair, setLatLngPair, 
+        inDistrict, setInDistrict, 
+        isLoading, setIsLoading, 
+        loadedDistrictData, setLoadedDistrictData, 
+        selectedElectionType, setSelectedElectionType, 
+        lastSelectedElectionType, setLastSelectedElectionType}} {...props} />;
 };
 /**
  * Makes AppContextProvider available for use in child function
