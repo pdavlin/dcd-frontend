@@ -52,7 +52,6 @@ export const getResultsForDistrict = async (dist) => {
  * @returns {[{electionDate: string, electionResults: resultsObject}]} Election data array
  */
 export const getDistrictCoordsForId = async (id) => {
-  console.log(id)
   if (id === 'dcb') {
     return dcb;
   } else if (id === 'sen') {

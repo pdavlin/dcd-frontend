@@ -158,7 +158,7 @@ export const AddressForm = () => {
           displayResults ?
             <div>
               <Text>
-                Your Douglas County Board of Commissioners district is {inDistrict}.
+                Your {elections[selectedElectionType]} district is {inDistrict}.
               </Text>
               <ElectionGraph
                 results={placeholderElectionData}

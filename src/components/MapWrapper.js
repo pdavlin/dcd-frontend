@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { useAppContext } from './AppContext';
-import { dcb } from './Consts';
 import { pointInPoly } from './Raycaster';
 
 /**
@@ -78,9 +77,6 @@ const MapWrapper = () => {
    */
   const findPointIfInDistrictLayer = (maps, latLngPair) => {
     if (displayedPolygonId !== null) {
-      const d = loadedDistrictData.find(district => district.id === displayedPolygonId);
-      console.log(d);
-      // d.polygon.setMap(null);
       loadedPolygon.setMap(null);
       setDisplayedPolygonId(null);
     }
@@ -92,7 +88,7 @@ const MapWrapper = () => {
         return district.name;
       }
     }
-    console.log('not found!');
+    console.warn('point not found in district!');
     return null;
   }
 
@@ -105,7 +101,6 @@ const MapWrapper = () => {
    */
   const loadPolygonsIntoDistrictData = async (map, maps) => {
     for (let district of loadedDistrictData) {
-      console.log(district)
       district.polygon = new maps.Polygon({
         paths: district.coords,
         strokeColor: "#55d6be",
