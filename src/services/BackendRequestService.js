@@ -15,7 +15,7 @@ const getElectionsForDistrict = async (dist) => {
   });
 }
 /**
- * Return a listing of elections with data pertaining to the specified district.
+ * Return a listing of elections with data pertaining to the specified election.
  * @param {string} dist Formatted as [YYYY]-[three-letter district ID]-[District #] (e.g., `2018-dcb-1`)
  * @returns {Promise<import('axios').AxiosResponse>} Backend response
  */

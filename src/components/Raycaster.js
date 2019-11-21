@@ -1,7 +1,4 @@
 /* eslint-disable no-mixed-operators */
-// Polygon getBounds extension - google-maps-extensions
-// https://github.com/tparkin/Google-Maps-Point-in-Polygon
-// http://code.google.com/p/google-maps-extensions/source/browse/google.maps.Polygon.getBounds.js
 /**
  * Determines whether a point is in a district polygon using a ray casting function.
  * @author Tim Parkin (modified for this project)

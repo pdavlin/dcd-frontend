@@ -86,8 +86,8 @@ const MapWrapper = () => {
    * Loads initial polygon set from COUNTY_BOARD constant into map instance.
    * @param map Google Maps map instance
    * @param maps Google Maps API interface object
-   * @todo When district data is moved to an API call, this will need to be reworked at request time to load new polygon data into active 
-   *       district, as needed.
+   * @todo When district data is moved to an API call, this will need to be reworked at request time to 
+   *       load new polygon data into active district, as needed.
    */
   const onGoogleApiLoaded = (map, maps) => {
     for (let district of COUNTY_BOARD) {
