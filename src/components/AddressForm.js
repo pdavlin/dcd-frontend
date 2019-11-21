@@ -8,7 +8,9 @@ import { ElectionGraph } from './ElectionGraph';
 const elections = {
   '1': { name: 'Douglas County Board of Commissioners' }
 }
-
+/**
+ * Renders an interactive form for entering an address and displaying lookup results.
+ */
 export const AddressForm = () => {
 
   const { setLatLngPair, inDistrict, isLoading, setIsLoading } = useAppContext();
@@ -27,6 +29,10 @@ export const AddressForm = () => {
     }
   }, [inDistrict, isLoading])
 
+  /**
+   * Sets loading state in UI, organizes information, and sends to backend. Processes backend response.
+   * @param {*} event 
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     setDisplayResults(false);

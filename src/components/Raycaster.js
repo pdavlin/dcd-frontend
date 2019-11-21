@@ -2,11 +2,21 @@
 // Polygon getBounds extension - google-maps-extensions
 // https://github.com/tparkin/Google-Maps-Point-in-Polygon
 // http://code.google.com/p/google-maps-extensions/source/browse/google.maps.Polygon.getBounds.js
-export const pointInPoly = (maps, latLngPair, customPolygon) => {
+/**
+ * Determines whether a point is in a district polygon using a ray casting function.
+ * @author Tim Parkin (modified for this project)
+ * @param maps Google Maps API interface object
+ * @param {*} latLngPair 
+ * @param {*} districtPolygon Google Maps polygon object corresponding to selected district
+ * @returns `true` when coordinate pair is found inside polygon object.
+ * 
+ * @see https://github.com/tparkin/Google-Maps-Point-in-Polygon
+ */
+export const pointInPoly = (maps, latLngPair, districtPolygon) => {
   console.log(latLngPair);
   const getBounds = () => {
     var bounds = new maps.LatLngBounds(),
-      paths = customPolygon.getPaths(),
+      paths = districtPolygon.getPaths(),
       path,
       p, i;
 
@@ -53,9 +63,9 @@ export const pointInPoly = (maps, latLngPair, customPolygon) => {
 
     // Raycast point in polygon method
 
-    numPaths = customPolygon.getPaths().getLength();
+    numPaths = districtPolygon.getPaths().getLength();
     for (p = 0; p < numPaths; p++) {
-      path = customPolygon.getPaths().getAt(p);
+      path = districtPolygon.getPaths().getAt(p);
       numPoints = path.getLength();
       j = numPoints - 1;
 

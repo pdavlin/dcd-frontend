@@ -1,4 +1,7 @@
-// default theme preset
+/**
+ * Application theme provider.
+ * @const appTheme
+ */
 export const appTheme = {
   colors: {
     text: '#333',

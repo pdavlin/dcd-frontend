@@ -34865,6 +34865,10 @@ const COUNTY_BOARD_7_COORDS = [
   ]
 ]
 
+/**
+ * @constant COUNTY_BOARD Names, IDs, polygon object (initialized empty), and coordinate object(s) for Douglas County Board districts
+ * @todo Move this data to backend to reduce bundle size in frontend
+ */
 export const COUNTY_BOARD = [
   {
     id: 'dcbc-1',

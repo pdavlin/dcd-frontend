@@ -4,6 +4,10 @@ import { useAppContext } from './AppContext';
 import { COUNTY_BOARD } from './Consts';
 import { pointInPoly } from './Raycaster';
 
+/**
+ * Loads default display settings into Google Maps instance.
+ * @param maps Google Maps API interface object
+ */
 const createMapOptions = (maps) => {
   return {
     zoomControlOptions: {
@@ -13,6 +17,9 @@ const createMapOptions = (maps) => {
   };
 }
 
+/**
+ * Returns a UI component for Google Maps for display.
+ */
 const MapWrapper = () => {
   const { latLngPair, setInDistrict, setIsLoading } = useAppContext();
   const [map, setMap] = useState(null);
@@ -31,6 +38,10 @@ const MapWrapper = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latLngPair])
 
+  /**
+   * Adds a marker on the map in Google Maps UI.
+   * @param {[number, number]} latLngPair Google Maps coordinates for a user-specified location.
+   */
   const addMarker = (latLngPair) => {
     if (locationMarker !== null) {
       locationMarker.setMap(null);
@@ -48,6 +59,11 @@ const MapWrapper = () => {
       setLocationMarker(newLocationMarker)
     }
   }
+  /**
+   * 
+   * @param maps Google Maps API interface object
+   * @param {[number, number]} latLngPair Google Maps coordinates for a user-specified location. 
+   */
   const findPointIfInDistrictLayer = (maps, latLngPair) => {
     if (displayedPolygonId !== null) {
       const d = COUNTY_BOARD.find(district => district.id === displayedPolygonId);
@@ -66,6 +82,13 @@ const MapWrapper = () => {
     return null;
   }
 
+  /**
+   * Loads initial polygon set from COUNTY_BOARD constant into map instance.
+   * @param map Google Maps map instance
+   * @param maps Google Maps API interface object
+   * @todo When district data is moved to an API call, this will need to be reworked at request time to load new polygon data into active 
+   *       district, as needed.
+   */
   const onGoogleApiLoaded = (map, maps) => {
     for (let district of COUNTY_BOARD) {
       console.log(typeof district)

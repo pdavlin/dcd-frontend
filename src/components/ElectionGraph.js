@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { VictoryStack, VictoryBar } from 'victory';
 import { Text } from 'rebass';
 
-
-
+/**
+ * Renders a graph object 
+ * @param {{electionDate: string, electionResults: resultsObject}}  props Election data object
+ */
 export const ElectionGraph = (props) => {
   const [displayName, setDisplayName] = useState(null);
   const myDataset = [
