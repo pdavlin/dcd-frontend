@@ -3,8 +3,9 @@ import { VictoryStack, VictoryBar } from 'victory';
 import { Text } from 'rebass';
 
 /**
- * Renders a graph object 
- * @param {{electionDate: string, electionResults: resultsObject}}  props Election data object
+ * Renders a results graph for a given election result set.
+ * @param {{electionDate: string, electionResults: [{ballot_id:number, election_id:string, issue_name:string, party:string, votes:number, winning_issue:number}]}}  props Election data object
+ * @returns {JSX.Element} Graph UI Module
  */
 export const ElectionGraph = (props) => {
   const [displayName, setDisplayName] = useState(null);
@@ -14,7 +15,7 @@ export const ElectionGraph = (props) => {
     let newDataset = [];
     props.results.electionResults.forEach((resultSet) => {
       if (resultSet.winning_issue === 1) {
-        setWinInfo(`Winner: ${resultSet.issue_name} (${resultSet.votes} votes)`);
+        setWinInfo(`District winner: ${resultSet.issue_name} (${resultSet.votes} votes)`);
       }
       newDataset.push(
         [
