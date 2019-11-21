@@ -15,6 +15,7 @@ export const AddressForm = () => {
 
   const { setLatLngPair, inDistrict, isLoading, setIsLoading } = useAppContext();
   const [address, setAddress] = useState('1819 Farnam Street');
+  const [lastAddress, setLastAddress] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [displayResults, setDisplayResults] = useState(false);
   const [displayError, setDisplayError] = useState(false);
@@ -30,14 +31,9 @@ export const AddressForm = () => {
   }, [inDistrict, isLoading])
 
   /**
-   * Sets loading state in UI, organizes information, and sends to backend. Processes backend response.
-   * @param {*} event 
+   * Submits new address info to backend service for geolocation, and awaits results for display.
    */
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setDisplayResults(false);
-    setIsSubmitted(true);
-    setIsLoading(true);
+  const submitNewAddress = async () => {
     await getLatLngFromAddress(address).then(response => {
       if (response.data.status !== "REQUEST_DENIED") {
         setLatLngPair([response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng]);
@@ -47,8 +43,25 @@ export const AddressForm = () => {
         setDisplayError(true);
         setIsLoading(false)
       }
-    })
+    });
+  }
 
+  /**
+   * Sets loading state in UI, organizes information, and sends to backend if needed. 
+   * @param {*} event 
+   */
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setDisplayResults(false);
+    setIsSubmitted(true);
+    setIsLoading(true);
+    if (address !== lastAddress) {
+      setLastAddress(address);
+      await submitNewAddress();
+    } else {
+      setDisplayResults(true);
+      setIsLoading(false);
+    }
   }
 
   const newSearch = () => {
