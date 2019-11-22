@@ -59,5 +59,17 @@ export const getDistrictCoordsForId = async (id) => {
   } else if (id === 'com') {
     return com;
   }
+}
 
+/**
+ * Retrieves incumbent data for a single district from the backend.
+ * @param {string} dist Formatted as [three-letter district ID]-[District #] (e.g., `dcb-1`)
+ * @returns Incumbent data object
+ */
+export const getIncumbentInfo = async (id) => {
+  return axios.get(`${BASE_URL}incumbents`, {
+    params: {
+      id
+    }
+  });
 }

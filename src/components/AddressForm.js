@@ -4,7 +4,7 @@ import { Input, Label, Select } from '@rebass/forms';
 import { getLatLngFromAddress } from '../services/MapsApiService';
 import { useAppContext } from './AppContext';
 import { ElectionGraph } from './ElectionGraph';
-import { getDistrictCoordsForId } from '../services/BackendRequestService';
+import { getDistrictCoordsForId, getIncumbentInfo } from '../services/BackendRequestService';
 
 const elections = {
   'dcb': 'Douglas County Board of Commissioners',
@@ -41,21 +41,20 @@ export const AddressForm = () => {
   const [displayError, setDisplayError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // useEffect(() => {
-  //   const initializeLoadedData = async () => {
-  //     setLoadedDistrictData(await getDistrictCoordsForId(selectedElectionType));
-  //   }
-  //   initializeLoadedData();
-  // }, [])
-
   useEffect(() => {
     if (isLoading === false && inDistrict === null) {
       setDisplayError(true);
       setErrorMessage('That address wasn\'t found in any of the districts for that position. Please try another address.');
     } else if (isLoading === false && inDistrict !== null) {
       setDisplayResults(true);
+      incumbentRequestConnector(selectedElectionType);
     }
-  }, [inDistrict, isLoading]);
+  }, [inDistrict, isLoading, selectedElectionType]);
+
+  const incumbentRequestConnector = async () => {
+    const incumbentData = await getIncumbentInfo(selectedElectionType);
+    console.log(incumbentData);
+  }
 
   /**
    * Submits new address info to backend service for geolocation, and awaits results for display.
