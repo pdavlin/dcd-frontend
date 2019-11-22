@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {dcb, sen} from '../components/Consts';
+import {dcb, sen, com} from '../components/Consts';
 
 const BASE_URL = 'http://dcd.davlin.io/api/';
 
@@ -56,6 +56,8 @@ export const getDistrictCoordsForId = async (id) => {
     return dcb;
   } else if (id === 'sen') {
     return sen;
+  } else if (id === 'com') {
+    return com;
   }
 
 }

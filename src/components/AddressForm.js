@@ -8,7 +8,8 @@ import { getDistrictCoordsForId } from '../services/BackendRequestService';
 
 const elections = {
   'dcb': 'Douglas County Board of Commissioners',
-  'sen': 'United States Senate'
+  'sen': 'United States Senate',
+  'com': 'Mayor of Omaha'
 }
 
 const placeholderElectionData = {
@@ -86,6 +87,7 @@ export const AddressForm = () => {
     if (selectedElectionType !== lastSelectedElectionType) {
       await setLastSelectedElectionType(selectedElectionType);
       let someData = await getDistrictCoordsForId(selectedElectionType);
+      console.log(someData)
       await setLoadedDistrictData(someData);
     }
     if (address !== lastAddress || selectedElectionType !== lastSelectedElectionType) {
